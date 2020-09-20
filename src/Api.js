@@ -16,12 +16,12 @@ export function saveUserDetails(details){
 		let duplicate = oldItems.find((e)=>e.email===details.email);
 		if(duplicate!=null){
 			toast.error("Email Already Exists");
-			throw "Duplicate Email";
+			return false;
 		}
 		oldItems.push(details);
 		localStorage.setItem('blogPost:userList', JSON.stringify(oldItems));
 		return true;
-	} catch {
+	} catch(e) {
 		return false;
 	}
 

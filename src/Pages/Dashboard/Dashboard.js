@@ -14,17 +14,23 @@ class Dashboard extends Component{
 	}
 
 	async componentDidMount(){
-		this.setState({blogPosts: getBlogPosts()});
+		try {
+			const blogPosts = await getBlogPosts();
+			this.setState({blogPosts});
+		} catch(e){
+			history.push("/");
+			return null;
+		}
 	}
 	render(){
 		// console.log(getBlogPosts());
-		// const {blogPosts}=this.state;
-		// console.log(blogPosts);
+		const {blogPosts}=this.state;
+		console.log(blogPosts);
 		return(
 			<div>
 				<Navigation/>
 				<div className="BodyElement">
-					<div>No Posts to Display</div>
+					{blogPosts.length > 0 ? blogPosts.map((e)=>(<BlogCard cardData={e}/>)):(<div>No Posts to Display</div>)}
 				</div>
 			</div>
 		)
